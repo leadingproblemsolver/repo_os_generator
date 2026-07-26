@@ -1,0 +1,30 @@
+file_contract:
+  objective: Encode the BRAAT v2 operating contract applied to this repository.
+  why_it_exists: AI agents need explicit non-negotiables before editing repository structure or behavior.
+  how_to_use: Load this file before AI-assisted coding, reviews, or repository generation.
+  dependencies: repository.yaml, scripts/validate_repository_os.py
+  owner: Architect
+  update_policy: Change only when the operating contract changes.
+  examples: An AI agent must reject unowned directories because this contract forbids hidden context.
+  related_files: [repository.yaml, CONTRIBUTING.md]
+execution_contract:
+  ask_clarifying_questions: false
+  generate_complete_artifacts: true
+  avoid_unowned_files: true
+  every_directory_requires_description: true
+  every_file_requires_real_content: true
+repository_os_objective: Repository must explain itself.
+navigation_targets:
+  - zero_searching
+  - zero_hidden_context
+  - obvious_relationships
+  - obvious_boundaries
+  - deterministic_navigation
+success:
+  new_contributor_can:
+    - understand_repository_under_five_minutes
+    - locate_everything_without_search
+    - begin_work_without_meeting
+    - preserve_architecture
+    - execute_independently
+    - contribute_without_context_reconstruction

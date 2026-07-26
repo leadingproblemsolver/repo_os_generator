@@ -1,0 +1,13 @@
+"""
+    Escalation package exports
+
+    Objective: Expose escalation policy through package boundary.
+    Why it exists: Keeps implementation behavior explicit and reviewable inside the repository operating system.
+    How to use: Import the public classes or functions from this module; do not bypass the interface contracts.
+    Dependencies: Python standard library unless stated in the module imports.
+    Owner: Architect.
+    Update policy: Change this file only with a matching test, execution block, or decision record when behavior changes.
+    Examples: See tests/ and scripts/smoke_agent.py for executable usage.
+    Related files: src/support_agent/escalation/policy.py
+    """
+from support_agent.escalation.policy import EscalationPolicy

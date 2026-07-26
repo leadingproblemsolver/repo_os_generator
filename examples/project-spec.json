@@ -1,0 +1,14 @@
+{
+  "name": "Incident First-Check Analyzer",
+  "slug": "incident-first-check-analyzer",
+  "purpose": "Turn incident symptoms into a prioritized, source-bounded first-check sequence.",
+  "primary_user": "An engineer handling the first ten minutes of a production incident",
+  "primary_workflow": "Incident title and symptoms → classification and retrieval → prioritized checks with evidence boundary",
+  "runtime": "Python 3.12 and an HTTP API",
+  "owner": "Project owner",
+  "license": "MIT",
+  "non_goals": ["Autonomous remediation", "Unsupported root-cause claims"],
+  "core_subsystems": ["input contract", "classifier", "knowledge retrieval", "triage engine", "API"],
+  "success_criteria": ["Clean checkout passes all tests", "A cold user completes the primary workflow"],
+  "commands": {"run": "uvicorn src.main:app", "verify": "pytest -q"}
+}

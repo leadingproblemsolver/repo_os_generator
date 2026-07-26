@@ -1,0 +1,17 @@
+%% Objective: Provide a renderable architecture diagram.
+%% Why it exists: Visual context helps contributors understand system relationships quickly.
+%% How to use: Render with Mermaid-compatible tooling or read as source.
+%% Dependencies: architecture/SYSTEM_OVERVIEW.md, architecture/CONTEXT_MAP.md.
+%% Owner: Builder.
+%% Update policy: Update when system relationships change.
+%% Examples: API routes to Agent, Agent routes to bounded contexts.
+%% Related files: assets/README.md, architecture/SYSTEM_OVERVIEW.md.
+graph TD
+  API[API Boundary] --> Agent[Agent Orchestrator]
+  Agent --> CRM[CRM Context]
+  Agent --> Memory[Memory Context]
+  Agent --> Knowledge[Knowledge Retrieval]
+  Agent --> Tools[Tool Registry]
+  Agent --> Tickets[Ticket Service]
+  Agent --> Escalation[Escalation Policy]
+  Agent --> Evaluation[Evaluator]

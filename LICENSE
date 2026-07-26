@@ -1,0 +1,16 @@
+Objective: Define legal reuse terms for the repository.
+Why it exists: Contributors and operators need clear licensing before reuse or distribution.
+How to use: Keep this license attached to copied or modified versions of this repository.
+Dependencies: None.
+Owner: Architect.
+Update policy: Replace only after legal review and project-owner approval.
+Examples: Internal teams may adapt the repository under the terms below.
+Related files: CODE_OF_CONDUCT.md, CONTRIBUTING.md.
+
+MIT License
+
+Copyright (c) 2026 repo-os-generator contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the Software, subject to inclusion of this notice.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/repo-os/project-spec.schema.json",
+  "title": "Repository OS Project Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "slug", "purpose", "primary_user", "primary_workflow"],
+  "properties": {
+    "name": {"type": "string", "minLength": 1},
+    "slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+    "purpose": {"type": "string", "minLength": 1},
+    "primary_user": {"type": "string", "minLength": 1},
+    "primary_workflow": {"type": "string", "minLength": 1},
+    "runtime": {"type": "string"},
+    "owner": {"type": "string"},
+    "license": {"type": "string"},
+    "non_goals": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "core_subsystems": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "success_criteria": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "commands": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}}
+  }
+}

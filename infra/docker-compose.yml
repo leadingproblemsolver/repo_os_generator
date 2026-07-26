@@ -1,0 +1,19 @@
+# Objective: Run the support agent API locally with explicit environment values.
+# Why it exists: Operators need a one-command local service path.
+# How to use: docker compose -f infra/docker-compose.yml up --build.
+# Dependencies: infra/Dockerfile, .env.example.
+# Owner: Builder.
+# Update policy: Update when service dependencies change.
+# Examples: curl http://localhost:8000/docs after startup.
+# Related files: infra/README.md.
+services:
+  support-agent:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    environment:
+      SUPPORT_AGENT_ENV: local
+      SUPPORT_AGENT_LOG_LEVEL: INFO
+      SUPPORT_DEFAULT_PRIORITY: normal
+    ports:
+      - "8000:8000"

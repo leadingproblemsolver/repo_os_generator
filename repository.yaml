@@ -1,0 +1,50 @@
+file_contract:
+  objective: Machine-readable map of repository ownership, directories, and validation rules.
+  why_it_exists: Repository navigation and AI collaboration need deterministic source-of-truth metadata.
+  how_to_use: Read before generating, moving, or deleting files. Automation can parse this file.
+  dependencies: braat.yaml, INDEX.md, scripts/validate_repository_os.py
+  owner: Architect
+  update_policy: Update with any directory, ownership, or validation-rule change.
+  examples: scripts/validate_repository_os.py verifies directory contracts from this file.
+  related_files: [braat.yaml, INDEX.md, navigation/MAP.md]
+project:
+  name: repo-os-generator (sample: deterministic customer-support reference implementation)
+  architecture_style: [modular, bounded_context, domain_driven, repository_operating_system, ai_native]
+roles:
+  architect:
+    owns: [mission, roadmap, architecture, interfaces, requirements, system_design, prioritization, evaluation, decisions]
+    forbidden: [repetitive_crud, ui_polish, repetitive_refactoring]
+  builder:
+    owns: [frontend, backend, infrastructure, integrations, testing, deployment]
+    forbidden: [changing_architecture, changing_interfaces, changing_mission]
+directories:
+  mission: owns product purpose and outcome logic
+  navigation: owns deterministic contributor movement through the repository
+  architecture: owns bounded contexts, interfaces, data model, and system relationships
+  execution: owns feature execution blocks and active work
+  projects: owns project packaging, releases, and initiatives
+  proof: owns benchmarks, acceptance, demonstrations, validation, and metrics
+  knowledge: owns company knowledge structure and retrieval governance
+  decisions: owns architectural decision records
+  standards: owns coding, review, security, privacy, and AI collaboration standards
+  templates: owns reusable execution, decision, and proof formats
+  scripts: owns executable repository checks and local demonstrations
+  assets: owns diagrams and non-code supporting assets
+  docs: owns bilingual contributor documentation
+  src: owns runtime implementation
+  tests: owns automated behavioral checks
+  infra: owns local deployment and production integration scaffolding
+validation:
+  required_root_files:
+    - README.md
+    - INDEX.md
+    - CONTRIBUTING.md
+    - ARCHITECTURE.md
+    - ROADMAP.md
+    - GLOSSARY.md
+    - LICENSE
+    - CODE_OF_CONDUCT.md
+    - repository.yaml
+    - braat.yaml
+  required_metadata_fields: [objective, why_it_exists, how_to_use, dependencies, owner, update_policy, examples, related_files]
+  forbidden_content_markers: [task_marker, undecided_marker, unowned_bucket]
