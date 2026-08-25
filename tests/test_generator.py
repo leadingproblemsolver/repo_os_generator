@@ -65,18 +65,26 @@ def test_generate_writes_contract_and_manifest(tmp_path: Path) -> None:
     assert (target / "generation-manifest.json").is_file()
     assert "README.md" in result.files_written
     assert not (target / "market" / "market-artifact-manifest.json").exists()
+    assert not (target / ".github" / "workflows" / "market-manifest.yml").exists()
 
 
-def test_generate_emits_market_manifest_only_from_explicit_route_spec(tmp_path: Path) -> None:
+def test_generate_emits_market_manifest_and_ci_only_from_explicit_route_spec(tmp_path: Path) -> None:
     target = tmp_path / "repo"
     result = generate_repository(market_spec(), target)
     market_path = target / "market" / "market-artifact-manifest.json"
+    workflow_path = target / ".github" / "workflows" / "market-manifest.yml"
     assert market_path.is_file()
+    assert workflow_path.is_file()
     payload = json.loads(market_path.read_text(encoding="utf-8"))
     assert payload["repo"] == "leadingproblemsolver/market-routed-system"
     assert payload["target_roles"] == ["Head of Operations"]
     assert payload["proof_refs"] == ["CI receipt"]
+    workflow = workflow_path.read_text(encoding="utf-8")
+    assert "Market Manifest Contract" in workflow
+    assert "desired_consequence" in workflow
+    assert "send" not in workflow.lower()
     assert "market/market-artifact-manifest.json" in result.files_written
+    assert ".github/workflows/market-manifest.yml" in result.files_written
 
 
 def test_market_route_rejects_partial_contract() -> None:
