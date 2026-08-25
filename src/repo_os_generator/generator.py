@@ -55,6 +55,47 @@ def generate_repository(spec: ProjectSpec, target: Path, *, force: bool = False)
     return GenerationResult(target=target, files_written=tuple(sorted(final_manifest["files"])), manifest_sha256=digest)
 
 
+def _market_manifest_workflow() -> str:
+    return """name: Market Manifest Contract
+
+on:
+  push:
+    paths:
+      - \"market/market-artifact-manifest.json\"
+      - \".github/workflows/market-manifest.yml\"
+  pull_request:
+    paths:
+      - \"market/market-artifact-manifest.json\"
+      - \".github/workflows/market-manifest.yml\"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: \"3.12\"
+      - name: Validate routing contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path(\"market/market-artifact-manifest.json\").read_text(encoding=\"utf-8\"))
+          for key in (\"repo\", \"artifact_id\", \"artifact_url\", \"system\", \"wedge\", \"desired_consequence\"):
+              assert isinstance(data.get(key), str) and data[key].strip(), f\"{key} must be non-empty\"
+          for key in (\"target_roles\", \"proof_refs\"):
+              assert isinstance(data.get(key), list) and data[key], f\"{key} must be non-empty\"
+              assert all(isinstance(item, str) and item.strip() for item in data[key]), f\"{key} contains blank/non-string items\"
+          print(json.dumps({\"valid\": True, \"artifact_id\": data[\"artifact_id\"]}, sort_keys=True))
+          PY
+"""
+
+
 def _render(spec: ProjectSpec) -> dict[str, str]:
     files: dict[str, str] = {
         "README.md": templates.root_readme(spec),
@@ -85,6 +126,18 @@ def _render(spec: ProjectSpec) -> dict[str, str]:
         ".gitignore": ".venv/\n__pycache__/\n.pytest_cache/\n.env\n*.log\ndist/\nbuild/\n",
         ".env.example": "# Declare required runtime variables here without secrets.\n",
     }
+    if spec.market_route is not None:
+        files["market/market-artifact-manifest.json"] = json.dumps(
+            spec.market_route.to_manifest(), indent=2, sort_keys=True
+        )
+        files["market/README.md"] = (
+            "# Market routing\n\n"
+            "`market-artifact-manifest.json` is an explicit producer-side contract for the "
+            "SignalOps + Clay market distribution router. It contains operator-supplied market "
+            "facts only; generating this repository does not authorize outreach, CRM mutation, "
+            "or claim adoption/revenue.\n"
+        )
+        files[".github/workflows/market-manifest.yml"] = _market_manifest_workflow()
     for directory in templates.DIRECTORIES:
         files.setdefault(f"{directory}/README.md", templates.directory_readme(directory, spec))
     return files
