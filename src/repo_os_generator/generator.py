@@ -85,6 +85,17 @@ def _render(spec: ProjectSpec) -> dict[str, str]:
         ".gitignore": ".venv/\n__pycache__/\n.pytest_cache/\n.env\n*.log\ndist/\nbuild/\n",
         ".env.example": "# Declare required runtime variables here without secrets.\n",
     }
+    if spec.market_route is not None:
+        files["market/market-artifact-manifest.json"] = json.dumps(
+            spec.market_route.to_manifest(), indent=2, sort_keys=True
+        )
+        files["market/README.md"] = (
+            "# Market routing\n\n"
+            "`market-artifact-manifest.json` is an explicit producer-side contract for the "
+            "SignalOps + Clay market distribution router. It contains operator-supplied market "
+            "facts only; generating this repository does not authorize outreach, CRM mutation, "
+            "or claim adoption/revenue.\n"
+        )
     for directory in templates.DIRECTORIES:
         files.setdefault(f"{directory}/README.md", templates.directory_readme(directory, spec))
     return files
